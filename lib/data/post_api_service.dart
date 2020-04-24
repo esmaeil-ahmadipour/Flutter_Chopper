@@ -14,4 +14,16 @@ abstract class PostApiService extends ChopperService{
   @Post()
   Future<Response> postPost(@Body() Map<String , dynamic> body,);
 
+  static PostApiService create(){
+    final client = ChopperClient(
+      baseUrl: 'https://jsonplaceholder.typicode.com',
+          services: [
+            _$PostApiService(),
+          ],
+      converter: JsonConverter(),
+
+
+    );
+    return _$PostApiService(client);
+  }
 }
