@@ -17,24 +17,24 @@ class _$PostApiService extends PostApiService {
   final definitionType = PostApiService;
 
   @override
-  Future<Response<dynamic>> getPosts() {
+  Future<Response<BuiltList<BuiltPost>>> getPosts() {
     final $url = 'https://jsonplaceholder.typicode.com/posts';
     final $request = Request('GET', $url, client.baseUrl);
-    return client.send<dynamic, dynamic>($request);
+    return client.send<BuiltList<BuiltPost>, BuiltPost>($request);
   }
 
   @override
-  Future<Response<dynamic>> getPost(int id) {
+  Future<Response<BuiltPost>> getPost(int id) {
     final $url = 'https://jsonplaceholder.typicode.com/posts/$id';
     final $request = Request('GET', $url, client.baseUrl);
-    return client.send<dynamic, dynamic>($request);
+    return client.send<BuiltPost, BuiltPost>($request);
   }
 
   @override
-  Future<Response<dynamic>> postPost(Map<String, dynamic> body) {
+  Future<Response<BuiltPost>> postPost(BuiltPost body) {
     final $url = 'https://jsonplaceholder.typicode.com/posts';
     final $body = body;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<dynamic, dynamic>($request);
+    return client.send<BuiltPost, BuiltPost>($request);
   }
 }
