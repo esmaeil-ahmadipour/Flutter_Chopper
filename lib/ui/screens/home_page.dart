@@ -6,9 +6,9 @@ import 'package:flutterchopper/ui/screens/SinglePostPage.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatelessWidget {
-  final String title;
 
-  MyHomePage({this.title});
+
+  MyHomePage();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class MyHomePage extends StatelessWidget {
       body: _buildBody(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final response = await Provider.of<PostApiService>(context,listen: false)
+          final response = await Provider.of<PostApiService>(context)
               .postPost({'key': 'value'});
           print(response.body);
         },
@@ -34,6 +34,11 @@ FutureBuilder<Response> _buildBody(BuildContext context) {
     future: Provider.of<PostApiService>(context).getPosts(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
+        if(snapshot.hasError){
+          return Center(
+            child: Text(snapshot.error.toString(),textAlign: TextAlign.center,textScaleFactor: 1.3,),
+          );
+        }
         final List posts = json.decode(snapshot.data.bodyString);
         return _buildPosts(context, posts);
       } else {
@@ -49,7 +54,7 @@ ListView _buildPosts(BuildContext context, List posts) {
   return ListView.builder(
     itemCount: posts.length,
     padding: EdgeInsets.all(8.0),
-    itemBuilder: (contex, index) {
+    itemBuilder: (context, index) {
       return Card(
         elevation: 4,
         child: ListTile(
